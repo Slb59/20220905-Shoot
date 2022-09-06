@@ -1,4 +1,5 @@
-# 20220905TestPython7
-p7
+# 20220905-shooter
 
-Creation d'un shoot
+suivi du tuto de création d'un shooter en python
+
+par Graven - Développement
