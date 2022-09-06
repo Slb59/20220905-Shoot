@@ -1,16 +1,35 @@
-# This is a sample Python script.
+import pygame
 
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+pygame.init()
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# generer la fenetre du jeu
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('modif de la branche')
+pygame.display.set_caption("Jeu de shooter")
+# TODO : Changer le titre du jeu et ajouter une icone de jeu
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+screen = pygame.display.set_mode((1080, 720))
+
+background = pygame.image.load('assets/bg.jpg')
+running = True
+
+# boucle de jeu
+
+while running:
+
+    # appliquer l'arriere plan
+    screen.blit(background,(0,-200))
+
+    # mettre a jour l'ecran
+    pygame.display.flip()
+
+    # si le joueur ferme cette fenetre
+    for event in pygame.event.get():
+
+        # evenement fermeture de fenetre
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+            print("Fermeture du jeu")
+
+
