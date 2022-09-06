@@ -1,4 +1,5 @@
 import pygame
+import math
 from game import Game
 
 pygame.init()
@@ -13,6 +14,19 @@ screen = pygame.display.set_mode((1080, 720))
 
 background = pygame.image.load('assets/bg.jpg')
 
+# importer la banniere
+banner = pygame.image.load('assets/banner.png')
+banner = pygame.transform.scale(banner, (500, 500))
+banner_rect = banner.get_rect()
+banner_rect.x = math.ceil(screen.get_width() / 4)
+
+# charge le bouton play
+play_button = pygame.image.load('assets/button.png')
+play_button = pygame.transform.scale(play_button, (400, 150))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = math.ceil(screen.get_width() / 3.33)
+play_button_rect.y = math.ceil(screen.get_height() / 2)
+
 # charger le jouer
 game = Game()
 
@@ -25,32 +39,14 @@ while running:
     # appliquer l'arriere plan
     screen.blit(background, (0, -200))
 
-    # appliquer l'image du joueur
-    screen.blit(game.player.image, game.player.rect)
-
-    # actualiser la barre de vie du joueur
-    game.player.update_health_bar(screen)
-
-    # recuperer les projectiles du joueur
-    for projectile in game.player.all_projectiles:
-        projectile.move()
-
-    # recupere les monstres du jeu
-    for monster in game.all_monsters:
-        monster.forward()
-        monster.update_health_bar(screen)
-
-    # appliquer les images du groupe de projectiles
-    game.player.all_projectiles.draw(screen)
-
-    # appliquer les images du groupe de monstre
-    game.all_monsters.draw(screen)
-
-    # verifier si le joueur souhaite aller à gauche ou a droite
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
-        game.player.move_right()
-    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0:
-        game.player.move_left()
+    # verifie si le jeu a commencé
+    if game.is_playing:
+        game.update(screen)
+    else:
+        # le jeu n'a pas commencé
+        # ajouter l'écran de bienvenu
+        screen.blit(banner, banner_rect)
+        screen.blit(play_button, play_button_rect)
 
     # mettre a jour l'ecran
     pygame.display.flip()
@@ -69,7 +65,6 @@ while running:
             game.pressed[event.key] = True
 
             if event.key == pygame.K_SPACE:
-                print('envoi un projectile')
                 game.player.launch_projectile()
 
         elif event.type == pygame.KEYUP:
