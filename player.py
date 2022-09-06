@@ -15,6 +15,19 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = 500
         self.game = game
 
+    def damage(self, amount):
+        if self.health - amount > amount:
+            self.health -= amount
+        # TODO : le joueur meurt
+
+
+
+    def update_health_bar(self, surface):
+
+        # dessin de la barre de vie
+        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
+        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
+
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
 
