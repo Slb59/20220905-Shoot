@@ -21,8 +21,7 @@ class Comet(pygame.sprite.Sprite):
             # remettre la barre a 0
             self.comet_event.reset_percent()
             # remettre les monstres
-            self.comet_event.game.spawn_monster()
-            self.comet_event.game.spawn_monster()
+            self.comet_event.game.start()
 
     def fall(self):
         self.rect.y += self.velocity

@@ -4,6 +4,11 @@ from game import Game
 
 pygame.init()
 
+# definir une clock
+clock = pygame.time.Clock()
+FPS = 60
+
+
 # generer la fenetre du jeu
 
 
@@ -76,7 +81,7 @@ while running:
                 # lancement du jeu
                 game.start()
 
-
+    clock.tick(FPS)
 
 
 
