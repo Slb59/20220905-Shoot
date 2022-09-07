@@ -1,15 +1,15 @@
 import pygame
 import random
+import animation
 
-class Monster(pygame.sprite.Sprite):
+class Monster(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("mummy")
         self.health = 100
         self.max_health = 100
         self.attack = 0.3
 
-        self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
         # TODO : recuperer la taille de l'écran
@@ -19,6 +19,8 @@ class Monster(pygame.sprite.Sprite):
         # TODO : mettre une vitesse aleatoire
 
         self.game = game
+
+        self.start_animation()
 
     def damage(self, amount):
         # infliger les degats
@@ -37,6 +39,8 @@ class Monster(pygame.sprite.Sprite):
                 self.game.comet_event.attempt_fall()
 
 
+    def update_animation(self):
+        self.animate(True)
     def update_health_bar(self, surface):
 
         # dessin de la barre de vie
