@@ -14,9 +14,24 @@ class Game():
         self.all_monsters = pygame.sprite.Group()
         # ensemble des touches utilisees
         self.pressed = {}
+
+
+    def start(self):
+        self.is_playing = True
         # spawn un premier monstre
         self.spawn_monster()
         self.spawn_monster()
+
+    def game_over(self):
+        # remettre le jeu a neuf
+        # retirer les monstres
+        self.all_monsters = pygame.sprite.Group()
+
+        # remettre les vies au joueur
+        self.player.health = self.player.max_health
+
+        # remettre le jeu en attente
+        self.is_playing = False
 
     def update(self, screen):
 

@@ -70,6 +70,11 @@ while running:
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # verifie si la souris est en collision avec le bouton play
+            if play_button_rect.collidepoint(event.pos):
+                # lancement du jeu
+                game.start()
 
 
 
