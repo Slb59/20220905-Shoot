@@ -2,6 +2,7 @@ import pygame
 from player import Player
 from monster import Mummy, Alien
 from comet_event import CometFallEvent
+from sounds import SoundManager
 
 class Game():
     def __init__(self):
@@ -21,10 +22,13 @@ class Game():
         self.font = pygame.font.Font("assets/my_custom_font.ttf", 25)
         # mettre le score a 0
         self.score = 0
+        # gerer le son
+        self.sound_manager = SoundManager()
 
 
     def start(self):
         self.is_playing = True
+
         # spawn un premier monstre
         self.spawn_monster(Mummy)
         self.spawn_monster(Mummy)
@@ -46,6 +50,8 @@ class Game():
         self.comet_event.reset_percent()
 
         self.score = 0
+
+        self.sound_manager.play('game_over')
 
     def add_score(self, points=10):
         self.score += points
