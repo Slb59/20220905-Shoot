@@ -1,7 +1,8 @@
 import pygame
 from player import Player
-from monster import Monster
+from monster import Mummy, Alien
 from comet_event import CometFallEvent
+from sounds import SoundManager
 
 class Game():
     def __init__(self):
@@ -17,12 +18,21 @@ class Game():
         self.pressed = {}
         # generer le manager de comete
         self.comet_event = CometFallEvent(self)
+        # chargement de la police
+        self.font = pygame.font.Font("assets/my_custom_font.ttf", 25)
+        # mettre le score a 0
+        self.score = 0
+        # gerer le son
+        self.sound_manager = SoundManager()
+
 
     def start(self):
         self.is_playing = True
+
         # spawn un premier monstre
-        self.spawn_monster()
-        self.spawn_monster()
+        self.spawn_monster(Mummy)
+        self.spawn_monster(Mummy)
+        self.spawn_monster(Alien)
 
     def game_over(self):
         # remettre le jeu a neuf
@@ -39,7 +49,21 @@ class Game():
         self.comet_event.all_comets = pygame.sprite.Group()
         self.comet_event.reset_percent()
 
+        self.score = 0
+
+        self.sound_manager.play('game_over')
+
+    def add_score(self, points=10):
+        self.score += points
+
+
+
     def update(self, screen):
+
+        # afficher le score
+
+        score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
 
         # appliquer l'image du joueur
         screen.blit(self.player.image, self.player.rect)
@@ -85,6 +109,5 @@ class Game():
     def check_collision(self, sprite, group):
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
-    def spawn_monster(self):
-        monster = Monster(self)
-        self.all_monsters.add(monster)
+    def spawn_monster(self, monster_class_name):
+         self.all_monsters.add(monster_class_name.__call__(self))

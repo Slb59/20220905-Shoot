@@ -4,6 +4,11 @@ from game import Game
 
 pygame.init()
 
+# definir une clock
+clock = pygame.time.Clock()
+FPS = 60
+
+
 # generer la fenetre du jeu
 
 
@@ -65,7 +70,11 @@ while running:
             game.pressed[event.key] = True
 
             if event.key == pygame.K_SPACE:
-                game.player.launch_projectile()
+                if game.is_playing:
+                    game.player.launch_projectile()
+                else:
+                    game.start()
+                    game.sound_manager.play('click')
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
@@ -75,8 +84,9 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # lancement du jeu
                 game.start()
+                game.sound_manager.play('click')
 
-
+    clock.tick(FPS)
 
 
 
