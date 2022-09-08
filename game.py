@@ -17,6 +17,11 @@ class Game():
         self.pressed = {}
         # generer le manager de comete
         self.comet_event = CometFallEvent(self)
+        # chargement de la police
+        self.font = pygame.font.Font("assets/my_custom_font.ttf", 25)
+        # mettre le score a 0
+        self.score = 0
+
 
     def start(self):
         self.is_playing = True
@@ -40,7 +45,19 @@ class Game():
         self.comet_event.all_comets = pygame.sprite.Group()
         self.comet_event.reset_percent()
 
+        self.score = 0
+
+    def add_score(self, points=10):
+        self.score += points
+
+
+
     def update(self, screen):
+
+        # afficher le score
+
+        score_text = self.font.render(f"Score : {self.score}", 1, (0, 0, 0))
+        screen.blit(score_text, (20, 20))
 
         # appliquer l'image du joueur
         screen.blit(self.player.image, self.player.rect)
